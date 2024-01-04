@@ -23,6 +23,11 @@
 
 namespace flutter {
 
+class AngleRenderTarget {
+public:
+  virtual ~AngleRenderTarget() {};
+};
+
 // A manager for initializing ANGLE correctly and using it to create and
 // destroy surfaces
 class AngleSurfaceManager {
@@ -85,6 +90,13 @@ class AngleSurfaceManager {
   // Gets the |ID3D11Device| chosen by ANGLE.
   bool GetDevice(ID3D11Device** device);
 
+  void SetPaintCallback(std::function<void(void*, int, int)> callback){
+    paint_callback_ = std::move(callback);
+  }
+  void SetAcceleratedPaintCallback(std::function<void(void*, int, int)> callback){
+    accelerated_paint_callback_ = std::move(callback);
+  }
+
  protected:
   // Creates a new surface manager retaining reference to the passed-in target
   // for the lifetime of the manager.
@@ -126,6 +138,11 @@ class AngleSurfaceManager {
 
   // The current D3D device.
   Microsoft::WRL::ComPtr<ID3D11Device> resolved_device_;
+
+  std::function<void(void*, int, int)> paint_callback_;
+  std::function<void(void*, int, int)> accelerated_paint_callback_;
+
+  std::unique_ptr<AngleRenderTarget> render_target_;
 
   // Number of active instances of AngleSurfaceManager
   static int instance_count_;

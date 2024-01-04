@@ -19,6 +19,8 @@ extern "C" {
 #endif
 
 typedef void (*VoidCallback)(void* /* user data */);
+typedef void (*PaintCallback)(void*, int width, int height, void*);
+typedef void (*AcceleratedPaintCallback)(void*, int width, int height, void*);
 
 // Opaque reference to a Flutter window controller.
 typedef struct FlutterDesktopViewControllerState*
@@ -211,6 +213,15 @@ FLUTTER_EXPORT HWND FlutterDesktopViewGetHWND(FlutterDesktopViewRef view);
 // Returns the DXGI adapter used for rendering or nullptr in case of error.
 FLUTTER_EXPORT IDXGIAdapter* FlutterDesktopViewGetGraphicsAdapter(
     FlutterDesktopViewRef view);
+
+FLUTTER_EXPORT void FlutterDesktopEngineSetPaintCallback(
+    FlutterDesktopViewRef view,
+    PaintCallback callback,
+    void* user_data);
+FLUTTER_EXPORT void FlutterDesktopEngineSetAcceleratedPaintCallback(
+    FlutterDesktopViewRef view,
+    AcceleratedPaintCallback callback,
+    void* user_data);
 
 // ========== Plugin Registrar (extensions) ==========
 // These are Windows-specific extensions to flutter_plugin_registrar.h

@@ -207,6 +207,26 @@ IDXGIAdapter* FlutterDesktopViewGetGraphicsAdapter(FlutterDesktopViewRef view) {
   return nullptr;
 }
 
+void FlutterDesktopEngineSetPaintCallback(FlutterDesktopViewRef view,
+                                              PaintCallback callback,
+                                              void* user_data) {
+  auto surface_manager = ViewFromHandle(view)->GetEngine()->surface_manager();
+  if (surface_manager) {
+    surface_manager->SetPaintCallback(
+        [callback, user_data](void* buffer, int width, int height) { callback(buffer, width, height, user_data); });
+  }
+}
+
+void FlutterDesktopEngineSetAcceleratedPaintCallback(FlutterDesktopViewRef view,
+                                              AcceleratedPaintCallback callback,
+                                              void* user_data) {
+  auto surface_manager = ViewFromHandle(view)->GetEngine()->surface_manager();
+  if (surface_manager) {
+    surface_manager->SetAcceleratedPaintCallback(
+        [callback, user_data](void* shared_handle, int width, int height) { callback(shared_handle, width, height, user_data); });
+  }
+}
+
 FlutterDesktopViewRef FlutterDesktopPluginRegistrarGetView(
     FlutterDesktopPluginRegistrarRef registrar) {
   return HandleForView(registrar->engine->view());

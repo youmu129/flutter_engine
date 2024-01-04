@@ -7,6 +7,8 @@
 
 #include <flutter_windows.h>
 
+#include <functional>
+
 namespace flutter {
 
 // A view displaying Flutter content.
@@ -28,9 +30,14 @@ class FlutterView {
     return FlutterDesktopViewGetGraphicsAdapter(view_);
   }
 
+  void SetPaintCallback(std::function<void(void*, int, int)> callback);
+  void SetAcceleratedPaintCallback(std::function<void(void*, int, int)> callback);
+
  private:
   // Handle for interacting with the C API's view.
   FlutterDesktopViewRef view_ = nullptr;
+  std::function<void(void*, int, int)> paint_callback_ = nullptr;
+  std::function<void(void*, int, int)> accelerated_paint_callback_ = nullptr;
 };
 
 }  // namespace flutter

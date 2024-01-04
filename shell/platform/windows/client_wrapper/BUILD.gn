@@ -16,6 +16,7 @@ _wrapper_includes = [
 
 _wrapper_sources = [
   "flutter_engine.cc",
+  "flutter_view.cc",
   "flutter_view_controller.cc",
 ]
 
@@ -109,6 +110,7 @@ client_wrapper_file_archive_list = [
 
 win_client_wrapper_file_archive_list = [
   "flutter_engine.cc",
+  "flutter_view.cc",
   "flutter_view_controller.cc",
 ]
 

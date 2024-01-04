@@ -158,6 +158,19 @@ IDXGIAdapter* FlutterDesktopViewGetGraphicsAdapter(FlutterDesktopViewRef view) {
   return nullptr;
 }
 
+void FlutterDesktopEngineSetPaintCallback(FlutterDesktopViewRef view,
+                                              PaintCallback callback,
+                                              void* user_data) {
+
+}
+
+void FlutterDesktopEngineSetAcceleratedPaintCallback(FlutterDesktopViewRef view,
+                                              AcceleratedPaintCallback callback,
+                                              void* user_data) {
+
+}
+
+
 FlutterDesktopViewRef FlutterDesktopPluginRegistrarGetView(
     FlutterDesktopPluginRegistrarRef controller) {
   // The stub ignores this, so just return an arbitrary non-zero value.
